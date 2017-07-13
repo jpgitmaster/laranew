@@ -20,9 +20,11 @@
   display: inline-block;
 }
 
-.nptgrp textarea,
-.nptgrp select,
-.nptgrp input[type=text],
+.nptgrp.err textarea, .nptgrp.err select, .nptgrp.err input[type=text], .nptgrp.err input[type=password] {
+  border: 1px solid #923f3f;
+}
+
+.nptgrp textarea, .nptgrp select, .nptgrp input[type=text],
 .nptgrp input[type=password] {
   border: 1px solid #BDBDBD;
   padding: 8px 10px;
@@ -30,18 +32,12 @@
   width: 100%;
 }
 
-.nptgrp textarea:focus,
-.nptgrp select:focus,
-.nptgrp input[type=text]:focus,
+.nptgrp textarea:focus, .nptgrp select:focus, .nptgrp input[type=text]:focus,
 .nptgrp input[type=password]:focus {
   outline: none;
 }
 
-.nptgrp textarea:focus ~ label, .nptgrp textarea:valid ~ label,
-.nptgrp select:focus ~ label,
-.nptgrp select:valid ~ label,
-.nptgrp input[type=text]:focus ~ label,
-.nptgrp input[type=text]:valid ~ label,
+.nptgrp textarea:focus ~ label, .nptgrp textarea:valid ~ label, .nptgrp select:focus ~ label, .nptgrp select:valid ~ label, .nptgrp input[type=text]:focus ~ label, .nptgrp input[type=text]:valid ~ label,
 .nptgrp input[type=password]:focus ~ label,
 .nptgrp input[type=password]:valid ~ label {
   top: -15px;
@@ -65,59 +61,36 @@
   -webkit-transition: 0.2s ease all;
 }
 
-body, html {
-  background-color: #f9f9f9;
+.nptgrp .popcntnr {
+  position: absolute;
+  right: -40px;
+  bottom: 40px;
 }
 
-#wrapper {
-  float: left;
-  width: 100%;
+.nptgrp .popcntnr .popover {
+  position: relative;
+  display: block;
+  border-radius: 0;
+  border: 1px solid #923f3f;
 }
 
-#wrapper #header {
-  background-color: #FFF;
-  padding: 25px 30px;
-  float: left;
-  width: 100%;
+.nptgrp .popcntnr .popover.top .arrow {
+  border-top-color: #580303;
 }
 
-#wrapper #header form {
-  float: right;
+.nptgrp .popcntnr .popover .popover-content {
+  padding: 4px 28px 4px 10px;
+  font-size: 13px;
 }
 
-#wrapper #header form .nptgrp {
-  margin: 0;
-  width: 250px;
-}
-
-#wrapper #frmRgstr {
-  border-radius: 5px;
-  width: 480px;
-  padding: 20px 30px;
-  float: right;
-  margin: 30px;
-  background-color: #FFF;
-  box-shadow: 0px 0px 15px 0px rgba(0, 0, 0, 0.1);
-}
-
-#wrapper #frmRgstr h1 {
-  margin: 0 0 20px;
-}
-
-#wrapper #frmRgstr .btn {
-  float: right;
-}
-
-#wrapper #footerbtm {
-  background-color: #2a2a2a;
-  padding: 20px 0 15px;
-  text-align: center;
-}
-
-#wrapper #footerbtm p {
+.nptgrp .popcntnr .popover .popover-content .rmve {
+  position: absolute;
+  right: 0;
+  top: 0;
   color: #FFF;
-  font-size: 11px;
-  margin: 0;
+  cursor: pointer;
+  background-color: #EB5B40;
+  padding: 5px 6px;
 }
 
 /*# sourceMappingURL=global.css.map */

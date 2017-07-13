@@ -2,7 +2,7 @@ var elixir = require('laravel-elixir');
 
 elixir(function(mix) {
     mix.sass('app/global.scss', 'public/css/app');
-    // mix.sass('gnscs/pages_out/home.scss', 'public/css/gnscs/pages_out');
+    mix.sass('app/web/home.scss', 'public/css/app/web');
     // mix.sass('gnscs/pages_out/careers.scss', 'public/css/gnscs/pages_out');
     // mix.sass('gnscs/pages_out/about.scss', 'public/css/gnscs/pages_out');
     // mix.sass('gnscs/pages_out/services.scss', 'public/css/gnscs/pages_out');

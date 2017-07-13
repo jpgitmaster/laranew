@@ -1,5 +1,5 @@
 'use strict';
-var ngApp = angular.module('ngApp', ['ngResource']);
+var ngApp = angular.module('ngApp', ['ngResource', 'ngAnimate']);
 
 ngApp.controller('ctrlApp', ['$scope', '$http', function($scope, $http) {
     $scope.usrLogin = function(usr){
@@ -45,7 +45,7 @@ ngApp.controller('ctrlApp', ['$scope', '$http', function($scope, $http) {
         }).then(function(result){
             $scope.msg = result.data;
             console.log($scope.msg);
-            window.location.replace('admin/dashboard');
+            // window.location.replace('admin/dashboard');
         });
     }
 }]);
