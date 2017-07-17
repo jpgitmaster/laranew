@@ -13,8 +13,8 @@
 <body>
 <div id="wrapper" ng-controller="ctrlApp">
     <div id="header">
-        <form method="POST">
-            {{csrf_field()}}
+        <form action="login_c" method="POST" novalidate>
+            {{ csrf_field() }}
             <div class="nptgrp">
                 <input type="text" name="email" required>
                 <label>Email</label>
@@ -27,6 +27,7 @@
                 Login
             </button>
         </form>
+
     </div>
 
     <div id="frmRgstr">
