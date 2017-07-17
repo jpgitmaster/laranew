@@ -44,7 +44,8 @@ class WebController extends Controller
 
         if ($validate->fails()):
             return redirect('login')
-                    ->withErrors($validate);
+                    ->withErrors($validate)
+                    ->withInput();
         else:
             if (Auth::attempt(['email' => $user['email'], 'password' => $user['password']])):
                 return redirect('dashboard');
@@ -53,7 +54,11 @@ class WebController extends Controller
     }
 
     public function login_v(){
-    	return view('web.forms.login');
+    	return view('web.forms.login', [
+            'scripts'       => $this->import['scripts'],
+            'stylesheet'    => array_merge($this->import['stylesheet'], array(c_login)),
+            'ngular'        => $this->import['ngular']
+        ]);
     }
 
     public function register(Request $request){

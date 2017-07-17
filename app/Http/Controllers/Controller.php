@@ -30,6 +30,7 @@ class Controller extends BaseController
     	define('c_global', 'css/app/global.css');
 
         define('c_home', 'css/app/web/home.css');
+        define('c_login', 'css/app/web/login.css');
     }
 
     public function import_js(){
