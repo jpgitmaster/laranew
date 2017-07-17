@@ -36,28 +36,19 @@ class WebController extends Controller
     }
 
     public function login_c(Request $request){
-        $input = $request->all();
-        $user = json_decode($input['user'], true);
-        $msg = [];
-        
-        if($user['token'] == Session::token()):
-            $validate = Validator::make($user, [
-                'email' => 'required',
-                'pword' => 'required'
-            ]);
+        $user = $request->all();
+        $validate = Validator::make($user, [
+            'email' => 'required|email',
+            'password' => 'required'
+        ]);
 
-            $has_error = $this->hasError($validate);
-
-            if($has_error == true):
-                $msg['has_error'] = true;
-                $msg['error'] = $validate->messages()->toArray();
-            else:
-                if (Auth::attempt(['email' => $user['email'], 'password' => $user['pword']])):
-                    // Authentication passed...
-                    print_r('success');
-                endif;
+        if ($validate->fails()):
+            return redirect('login')
+                    ->withErrors($validate);
+        else:
+            if (Auth::attempt(['email' => $user['email'], 'password' => $user['password']])):
+                return redirect('dashboard');
             endif;
-            print_r(json_encode($msg, JSON_PRETTY_PRINT));
         endif;
     }
 

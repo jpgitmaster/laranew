@@ -17,16 +17,16 @@ ngApp.controller('ctrlApp', ['$scope', '$http', function($scope, $http) {
             }
         }).then(function(result){
             $scope.msg = result.data;
-            
-            if($scope.msg['has_error'] == true){
-                console.log($scope.msg);
-            }else{
-                // HTTP REDIRECT IN JS
-                window.location.replace('admin/dashboard');
+            console.log($scope.msg);
+            // if($scope.msg['has_error'] == true){
+            //     console.log($scope.msg);
+            // }else{
+            //     // HTTP REDIRECT IN JS
+            //     window.location.replace('admin/dashboard');
 
-                // LINK REDIRECT IN JS
-                // window.location.href = 'profile';
-            }
+            //     // LINK REDIRECT IN JS
+            //     // window.location.href = 'profile';
+            // }
             
         });
     }

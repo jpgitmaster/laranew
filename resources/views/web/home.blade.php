@@ -13,20 +13,21 @@
 <body>
 <div id="wrapper" ng-controller="ctrlApp">
     <div id="header">
-        <form ng-submit="usrLogin(usr)" method="POST" novalidate>
-            <input type="hidden" ng-model="usr.token" ng-init="usr.token='{{csrf_token()}}'">
+        <form action="login_c" method="POST" novalidate>
+            {{ csrf_field() }}
             <div class="nptgrp">
-                <input type="text" ng-model="usr.email" required>
+                <input type="text" name="email" required>
                 <label>Email</label>
             </div>
             <div class="nptgrp">
-                <input type="text" ng-model="usr.pword" required>
+                <input type="text" name="password" required>
                 <label>Password</label>
             </div>
             <button type="submit" class="btn btnblu">
                 Login
             </button>
         </form>
+
     </div>
 
     <div id="frmRgstr">
