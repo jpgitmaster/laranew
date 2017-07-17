@@ -13,14 +13,14 @@
 <body>
 <div id="wrapper" ng-controller="ctrlApp">
     <div id="header">
-        <form ng-submit="usrLogin(usr)" method="POST" novalidate>
-            <input type="hidden" ng-model="usr.token" ng-init="usr.token='{{csrf_token()}}'">
+        <form method="POST">
+            {{csrf_field()}}
             <div class="nptgrp">
-                <input type="text" ng-model="usr.email" required>
+                <input type="text" name="email" required>
                 <label>Email</label>
             </div>
             <div class="nptgrp">
-                <input type="text" ng-model="usr.pword" required>
+                <input type="text" name="password" required>
                 <label>Password</label>
             </div>
             <button type="submit" class="btn btnblu">
@@ -63,14 +63,14 @@
                     </div>
                 </div>
                 <div class="col-lg-12">
-                    <div class="nptgrp" ng-class="{'err': msg['error']['cpword']}">
-                        <input type="password" ng-model="rg.cpword" ng-focus="fcs_cpword = true" ng-blur="fcs_cpword = false" required>
+                    <div class="nptgrp" ng-class="{'err': msg['error']['pword_confirmation']}">
+                        <input type="password" ng-model="rg.pword_confirmation" ng-focus="fcs_pword_confirmation = true" ng-blur="fcs_pword_confirmation = false" required>
                         <label>Confirm Password</label>
-                        <div class="am-flip-x popcntnr" ng-if="msg['error']['cpword'] && fcs_cpword === true" ng-cloak>
+                        <div class="am-flip-x popcntnr" ng-if="msg['error']['pword_confirmation'] && fcs_pword_confirmation === true" ng-cloak>
                             <div class="popover top">
                                 <div class="arrow"></div>
                                 <div class="popover-content">
-                                    <%= msg['error']['cpword'][0] %>
+                                    <%= msg['error']['pword_confirmation'][0] %>
                                 </div>
                             </div>
                         </div>

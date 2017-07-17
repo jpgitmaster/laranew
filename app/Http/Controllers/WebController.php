@@ -23,7 +23,7 @@ class WebController extends Controller
         $this->replace_names = [
             'email' => 'Email',
             'pword' => 'Password',
-            'cpword' => 'Confirm Password'
+            'pword_confirmation' => 'Confirm Password'
         ];
     }
 
@@ -72,8 +72,8 @@ class WebController extends Controller
         if($user['token'] == Session::token()):
             $validate = Validator::make($user, [
                 'email' => 'required|email|max:80|unique:personal_information',
-                'pword' => 'required',
-                'cpword' => 'required'
+                'pword' => 'required|confirmed',
+                'pword_confirmation' => 'required'
             ]);
             $validate->setAttributeNames($this->replace_names);
             $has_error = $this->hasError($validate);
