@@ -15,37 +15,44 @@
     <div id="header">
         <form action="login_c" method="POST" novalidate style="margin-top: 8px;">
             {{ csrf_field() }}
-            <div class="nptgrp">
-                <input type="text" name="email" required>
+            <div class="nptgrp" ng-class="{'err': msg['error']['email']}">
+                <input type="text" ng-model="lgin.email" ng-focus="fcs_email = true" ng-blur="fcs_email = false" required>
                 <label>Email</label>
-                <div class="am-flip-x popcntnr">
+                <div class="am-flip-x popcntnr" ng-if="msg['error']['email'] && fcs_email === true" ng-cloak>
                     <div class="popover top">
                         <div class="arrow"></div>
-                        <div class="popover-content" style="padding: 1px 10px 0 10px; font-size: 12px;">
-                            The Password field is required.
+                        <div class="popover-content">
+                            <%= msg['error']['email'][0] %>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="nptgrp">
-                <input type="text" name="password" required>
+            <div class="nptgrp" ng-class="{'err': msg['error']['password']}">
+                <input type="text" name="password" ng-model="lgin.password" ng-focus="fcs_password = true" ng-blur="fcs_password = false" required>
                 <label>Password</label>
+                <div class="am-flip-x popcntnr" ng-if="msg['error']['password'] && fcs_password === true" ng-cloak>
+                    <div class="popover top">
+                        <div class="arrow"></div>
+                        <div class="popover-content">
+                            <%= msg['error']['password'][0] %>
+                        </div>
+                    </div>
+                </div>
             </div>
             <button type="submit" class="btn btnblu">
                 Login
             </button>
         </form>
-
     </div>
 
     <div id="frmRgstr">
         <h1>Register</h1>
-        <form ng-submit="usrRegister(rg)" method="POST" novalidate>
-            <input type="hidden" ng-model="rg.token" ng-init="rg.token='{{csrf_token()}}'">
+        <form ng-submit="usrRegister(rgstr)" method="POST" novalidate>
+            <input type="hidden" ng-model="rgstr.token" ng-init="rgstr.token='{{csrf_token()}}'">
             <div class="no-gutter">
                 <div class="col-lg-12">
                     <div class="nptgrp" ng-class="{'err': msg['error']['email']}">
-                        <input type="text" ng-model="rg.email" ng-focus="fcs_email = true" ng-blur="fcs_email = false" required>
+                        <input type="text" ng-model="rgstr.email" ng-focus="fcs_email = true" ng-blur="fcs_email = false" required>
                         <label>Email</label>
                         <div class="am-flip-x popcntnr" ng-if="msg['error']['email'] && fcs_email === true" ng-cloak>
                             <div class="popover top">
@@ -59,7 +66,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="nptgrp" ng-class="{'err': msg['error']['pword']}">
-                        <input type="password" ng-model="rg.pword" ng-focus="fcs_pword = true" ng-blur="fcs_pword = false" required>
+                        <input type="password" ng-model="rgstr.pword" ng-focus="fcs_pword = true" ng-blur="fcs_pword = false" required>
                         <label>Password</label>
                         <div class="am-flip-x popcntnr" ng-if="msg['error']['pword'] && fcs_pword === true" ng-cloak>
                             <div class="popover top">
@@ -73,7 +80,7 @@
                 </div>
                 <div class="col-lg-12">
                     <div class="nptgrp" ng-class="{'err': msg['error']['pword_confirmation']}">
-                        <input type="password" ng-model="rg.pword_confirmation" ng-focus="fcs_pword_confirmation = true" ng-blur="fcs_pword_confirmation = false" required>
+                        <input type="password" ng-model="rgstr.pword_confirmation" ng-focus="fcs_pword_confirmation = true" ng-blur="fcs_pword_confirmation = false" required>
                         <label>Confirm Password</label>
                         <div class="am-flip-x popcntnr" ng-if="msg['error']['pword_confirmation'] && fcs_pword_confirmation === true" ng-cloak>
                             <div class="popover top">

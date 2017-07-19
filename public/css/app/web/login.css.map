@@ -1,1 +1,1 @@
-{"version":3,"sources":["login.scss"],"names":[],"mappings":"AAAA;EAAU,aAAa;EAAE,eAAe;CAAG","file":"login.css","sourcesContent":[".frmlogin{width: 600px; margin: 0 auto;}"]}
+{"version":3,"sources":["login.scss"],"names":[],"mappings":"AAAA;EAAU,aAAa;EAAE,eAAe;CAAG","file":"login.css","sourcesContent":[".frmlogin{width: 400px; margin: 0 auto;}"]}
