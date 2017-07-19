@@ -13,11 +13,19 @@
 <body>
 <div id="wrapper" ng-controller="ctrlApp">
     <div id="header">
-        <form action="login_c" method="POST" novalidate>
+        <form action="login_c" method="POST" novalidate style="margin-top: 8px;">
             {{ csrf_field() }}
             <div class="nptgrp">
                 <input type="text" name="email" required>
                 <label>Email</label>
+                <div class="am-flip-x popcntnr">
+                    <div class="popover top">
+                        <div class="arrow"></div>
+                        <div class="popover-content" style="padding: 1px 10px 0 10px; font-size: 12px;">
+                            The Password field is required.
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="nptgrp">
                 <input type="text" name="password" required>
