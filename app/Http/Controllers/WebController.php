@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Mail\Mailer;
 
 class WebController extends Controller
 {
@@ -23,33 +24,45 @@ class WebController extends Controller
         $this->replace_names = [
             'email' => 'Email',
             'pword' => 'Password',
+            'lemail' => 'Email',
+            'lpassword' => 'Password',
             'pword_confirmation' => 'Confirm Password'
         ];
     }
 
     public function index(){
-    	return view('web.home', [
-            'scripts'       => $this->import['scripts'],
-            'stylesheet'    => array_merge($this->import['stylesheet'], array(c_home)),
-            'ngular'        => $this->import['ngular']
-        ]);
+        if (Auth::check()):
+            return redirect()->route('dashboard');
+        else:
+            return view('web.home', [
+                'scripts'       => $this->import['scripts'],
+                'stylesheet'    => array_merge($this->import['stylesheet'], array(c_home)),
+                'ngular'        => $this->import['ngular']
+            ]);
+        endif;
     }
 
     public function login_c(Request $request){
-        $user = $request->all();
-        $validate = Validator::make($user, [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
+        $input = $request->all();
+        $user = json_decode($input['user'], true);
 
-        if ($validate->fails()):
-            return redirect('login')
-                    ->withErrors($validate)
-                    ->withInput();
-        else:
-            if (Auth::attempt(['email' => $user['email'], 'password' => $user['password']])):
-                return redirect('dashboard');
+        if($user['token'] == Session::token()):
+            $validate = Validator::make($user, [
+                'lemail' => 'required|email',
+                'lpassword' => 'required'
+            ]);
+            $validate->setAttributeNames($this->replace_names);
+            $has_error = $this->hasError($validate);
+
+            if($has_error == true):
+                $msg['has_error'] = true;
+                $msg['error'] = $validate->messages()->toArray();
+            else:
+                if (Auth::attempt(['email' => $user['lemail'], 'password' => $user['lpassword'], 'active' => 1])):
+                    $msg['has_error'] = false;
+                endif;
             endif;
+            print_r(json_encode($msg, JSON_PRETTY_PRINT));
         endif;
     }
 
@@ -61,7 +74,7 @@ class WebController extends Controller
         ]);
     }
 
-    public function register(Request $request){
+    public function register(Request $request, Mailer $mailer){
     	$input = $request->all();
     	$user = json_decode($input['user'], true);
 
@@ -78,7 +91,7 @@ class WebController extends Controller
                 $msg['has_error'] = true;
                 $msg['error'] = $validate->messages()->toArray();
             else:
-                $usr = new Usr;
+                $usr = new User;
                 $usr->genid         = '';
                 $usr->email         = $user['email'];
                 $usr->password      = Hash::make($user['pword']);
@@ -88,6 +101,9 @@ class WebController extends Controller
                 $usr->last_login    = Carbon::now();
                 $usr->role          = 1;
                 $usr->save();
+
+                $mailer->to($user['email'])
+                    ->send(new MailNewRegistrants($user));
             endif;
             print_r(json_encode($msg, JSON_PRETTY_PRINT));
         endif;

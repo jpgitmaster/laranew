@@ -13,28 +13,28 @@
 <body>
 <div id="wrapper" ng-controller="ctrlApp">
     <div id="header">
-        <form action="login_c" method="POST" novalidate>
-            {{ csrf_field() }}
-            <div class="nptgrp" ng-class="{'err': msg['error']['email']}">
-                <input type="text" ng-model="lgin.email" ng-focus="fcs_email = true" ng-blur="fcs_email = false" required>
+        <form ng-submit="usrLogin(lgin)" method="POST" novalidate>
+            <input type="hidden" ng-model="lgin.token" ng-init="lgin.token='{{csrf_token()}}'">
+            <div class="nptgrp" ng-class="{'err': msg['error']['lemail']}">
+                <input type="text" ng-model="lgin.lemail" ng-focus="fcs_lemail = true" ng-blur="fcs_lemail = false" required>
                 <label>Email</label>
-                <div class="am-flip-x popcntnr" ng-if="msg['error']['email'] && fcs_email === true" ng-cloak>
+                <div class="am-flip-x popcntnr" ng-if="msg['error']['lemail'] && fcs_lemail === true" ng-cloak>
                     <div class="popover top">
                         <div class="arrow"></div>
                         <div class="popover-content">
-                            <%= msg['error']['email'][0] %>
+                            <%= msg['error']['lemail'][0] %>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="nptgrp" ng-class="{'err': msg['error']['password']}">
-                <input type="text" name="password" ng-model="lgin.password" ng-focus="fcs_password = true" ng-blur="fcs_password = false" required>
+            <div class="nptgrp" ng-class="{'err': msg['error']['lpassword']}">
+                <input type="password" ng-model="lgin.lpassword" ng-focus="fcs_lpassword = true" ng-blur="fcs_lpassword = false" required>
                 <label>Password</label>
-                <div class="am-flip-x popcntnr" ng-if="msg['error']['password'] && fcs_password === true" ng-cloak>
+                <div class="am-flip-x popcntnr" ng-if="msg['error']['lpassword'] && fcs_lpassword === true" ng-cloak>
                     <div class="popover top">
                         <div class="arrow"></div>
                         <div class="popover-content">
-                            <%= msg['error']['password'][0] %>
+                            <%= msg['error']['lpassword'][0] %>
                         </div>
                     </div>
                 </div>
