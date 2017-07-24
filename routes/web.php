@@ -7,6 +7,9 @@ Route::post('login_c', 'WebController@login_c');
 Route::post('register', 'WebController@register');
 
 
+Route::get('activation/{token}', 'WebController@email_confirmation')->name('activation');
+
+
 Route::prefix('admin')->group(function () {
 	Route::get('dashboard', [
 	    'as' => 'dashboard', 'uses' => 'AdminController@dashboard'

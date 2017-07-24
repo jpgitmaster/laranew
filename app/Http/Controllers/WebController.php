@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Usr;
 use Session;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Mail\Mailer;
+use App\Mail\MailNewRegistrants;
 
 class WebController extends Controller
 {
@@ -58,7 +59,7 @@ class WebController extends Controller
                 $msg['has_error'] = true;
                 $msg['error'] = $validate->messages()->toArray();
             else:
-                if (Auth::attempt(['email' => $user['lemail'], 'password' => $user['lpassword'], 'active' => 1])):
+                if (Auth::attempt(['email' => $user['lemail'], 'password' => $user['lpassword'], 'activated' => 0])):
                     $msg['has_error'] = false;
                 endif;
             endif;
@@ -80,7 +81,7 @@ class WebController extends Controller
 
         if($user['token'] == Session::token()):
             $validate = Validator::make($user, [
-                'email' => 'required|email|max:80|unique:personal_information',
+                'email' => 'required|email|max:80',
                 'pword' => 'required|confirmed',
                 'pword_confirmation' => 'required'
             ]);
@@ -91,21 +92,26 @@ class WebController extends Controller
                 $msg['has_error'] = true;
                 $msg['error'] = $validate->messages()->toArray();
             else:
-                $usr = new User;
-                $usr->genid         = '';
-                $usr->email         = $user['email'];
-                $usr->password      = Hash::make($user['pword']);
-                $usr->remember      = 0;
-                $usr->activated     = 0;
-                $usr->act_created   = Carbon::now();
-                $usr->last_login    = Carbon::now();
-                $usr->role          = 1;
-                $usr->save();
-
-                $mailer->to($user['email'])
-                    ->send(new MailNewRegistrants($user));
+                print_r($user['token']);
+                // $usr = new User;
+                // $usr->genid          = '';
+                // $usr->email          = $user['email'];
+                // $usr->password       = Hash::make($user['pword']);
+                // $usr->remember       = 0;
+                // $usr->activated      = 0;
+                // $usr->act_created    = Carbon::now();
+                // $usr->last_login     = Carbon::now();
+                // $usr->role           = 1;
+                // $usr->remember_token = $user['token'];
+                // $usr->save();
+                // if( count($mailer->failures()) > 0 ):
+                //     print_r(count($mailer->failures()));
+                // else:
+                //     $mailer->to($user['email'])
+                //         ->send(new MailNewRegistrants($user));
+                // endif;
             endif;
-            print_r(json_encode($msg, JSON_PRETTY_PRINT));
+            // print_r(json_encode($msg, JSON_PRETTY_PRINT));
         endif;
     	// print_r($request->session()->all());
     	// return redirect('profile');
@@ -121,4 +127,18 @@ class WebController extends Controller
             return $result;
         endif;
     }
+
+    public function email_confirmation($token){
+        $user = User::where('remember_token', $token)->first();
+
+        if(!is_null($user)){
+            // $user->confirmed = 1;
+            // $user->token = 1;
+            // $user->save();
+            return redirect()->route('login')->with('status', 'Your activation is completed.');
+        }
+        return redirect()->route('login')->with('status', 'Something went wrong.');
+    }
+
+
 }

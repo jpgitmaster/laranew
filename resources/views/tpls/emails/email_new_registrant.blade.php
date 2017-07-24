@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
 </head>
 <body>
-	<p><strong>Dear {{$user['fname']}} {{$user['mname']}} {{$user['lname']}}</strong></p>,
-	<br>
+	{{route('activation', $user['token'])}}
 	<p>
 		Thank you for your interest in joining 24/7 Global Nursing Solution & Consulting Services LLC. We appreciate the time you've taken to apply for the position of.
 		<br><br>

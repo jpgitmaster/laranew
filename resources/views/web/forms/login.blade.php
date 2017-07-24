@@ -14,6 +14,9 @@
 <body>
 
 <div class="frmlogin">
+@if ($status = Session::get('status'))
+  {{ $status }}
+@endif
 	<form action="login_c" method="POST" novalidate>
 		<h1>Login</h1>
 	    <div class="nptgrp">

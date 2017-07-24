@@ -18,11 +18,13 @@
             <div class="nptgrp" ng-class="{'err': msg['error']['lemail']}">
                 <input type="text" ng-model="lgin.lemail" ng-focus="fcs_lemail = true" ng-blur="fcs_lemail = false" required>
                 <label>Email</label>
-                <div class="am-flip-x popcntnr" ng-if="msg['error']['lemail'] && fcs_lemail === true" ng-cloak>
+                <div class="am-flip-x popcntnr">
                     <div class="popover top">
                         <div class="arrow"></div>
                         <div class="popover-content">
-                            <%= msg['error']['lemail'][0] %>
+                            <div>
+                                Lorem Ipsun Dolor testing.
+                            </div>
                         </div>
                     </div>
                 </div>
